@@ -320,8 +320,15 @@ def.unit.conv <- function(
     }
     
     # Check suffixes are the same between corresponding input & output units
-    if(base::sum(infoUnitFrom$sufx != infoUnitTo$sufx) > 0 || base::is.na(infoUnitFrom$sufx != infoUnitTo$sufx)) {
-      
+    #if(base::sum(infoUnitFrom$sufx != infoUnitTo$sufx) > 0 || base::is.na(infoUnitFrom$sufx != infoUnitTo$sufx)) {
+    # revised by Yang Song test
+    # First, handle NA values in the comparison
+    comparison <- infoUnitFrom$sufx != infoUnitTo$sufx
+    # Replace NA results in comparison with FALSE (or TRUE, depending on your logic)
+    comparison[is.na(comparison)] <- FALSE
+
+    # Now, check if there are any TRUE values in the comparison
+    if (sum(comparison) > 0) {
       if(!base::isTRUE(base::all.equal(coefPoly[[idxVar]],c(0,1)))){
         base::warning(base::paste("Unit suffixes for corresponding terms in unitTo and unitFrom must be the same. ", 
                                   "Unit conversion for variable: \"",idxVar, "\" not possible. Output for this variable set to NA. ",
