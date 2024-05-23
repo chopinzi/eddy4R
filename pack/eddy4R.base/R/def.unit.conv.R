@@ -324,8 +324,12 @@ def.unit.conv <- function(
     # revised by Yang Song test
     # First, handle NA values in the comparison
     comparison <- infoUnitFrom$sufx != infoUnitTo$sufx
+    print("test1")
+    print(comparison)
     # Replace NA results in comparison with FALSE (or TRUE, depending on your logic)
     comparison[is.na(comparison)] <- FALSE
+    print("test2")
+    print(sum(comparison))
 
     # Now, check if there are any TRUE values in the comparison
     if (sum(comparison) > 0) {
